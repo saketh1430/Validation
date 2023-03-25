@@ -4,61 +4,75 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        form {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-          }
-          
-          .container {
-            padding: 16px;
-            margin: 0 auto;
-            max-width: 500px;
-          }
-          
-          h1 {
-            text-align: center;
-          }
-          
-          label {
-            font-weight: bold;
-          }
-          
-          input[type=text], input[type=password] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-          }
-          
-          button[type=button] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-          }
-          
-          button[type=button]:hover {
-            opacity: 0.8;
-          }
-          
-          hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 20px;
-          }
-          
-          .signin {
-            text-align: center;
-          }
-          
-          .signin a {
-            color: #007bff;
-          }
-          
+        body {
+  background-color: #f5f5f5;
+}
+        /* Style form container */
+.container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Style form elements */
+h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="button"] {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 12px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="button"]:hover {
+  background-color: #45a049;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 14px;
+  text-align: center;
+}
+
+a {
+  color: #4CAF50;
+}
+
+a:hover {
+  color: #45a049;
+}
+
           /* Loading page styles */
           #loading-page {
             display: none;
@@ -79,11 +93,10 @@
             color: white;
             font-size: 24px;
           }
-          .name {
-            font-weight: bold;
-            font-style: italic;
-            color: #007bff; /* blue color */
-          }
+         .name {
+  font-weight: bold;
+  color: #4CAF50;
+}
           
     </style>
 </head>
