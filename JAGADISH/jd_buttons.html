@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Three Buttons</title>
+    <link rel="stylesheet" href="mid1.html">
+
+	<style>
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			margin-top: 20px;
+		  }
+		  
+		  button {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			font-size: 18px;
+			color: #fff;
+			background-color: #007bff;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		  }
+		  
+		  button:hover {
+			background-color: #0062cc;
+			transform: scale(1.05);
+		  }
+		  /* Loading page styles */
+          #loading-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+          }
+          
+          #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+          }
+		  
+	</style>
+</head>
+
+<body>
+	<!-- Loading page markup -->
+<div id="loading-page">
+	<div id="loading-message">Loading...</div>
+  </div>
+  
+    <h1>Welcome! MR.JAGADISH KUMAR</h1>
+	<div class="container">
+		<button onclick="window.location.href='jd_mid.html';" id="b1">Enter Mid Marks</button>
+		<button onclick="window.location.href='jd_getmid.html';" id="b2">Get Mid Marks</button>
+	</div>
+</body>
+</html>
+<script>
+	const loadingPage = document.getElementById('loading-page');
+	const submitButton1 = document.getElementById('b1');
+	const submitButton2 = document.getElementById('b2');
+	
+	submitButton1.addEventListener('click', () => {
+	  loadingPage.style.display = 'block';
+  
+	  // Simulate a delay of 3 seconds for demonstration purposes
+	  setTimeout(() => {
+		loadingPage.style.display = 'none';
+	  }, 3000);
+	});
+	submitButton2.addEventListener('click', () => {
+		loadingPage.style.display = 'block';
+	
+		// Simulate a delay of 3 seconds for demonstration purposes
+		setTimeout(() => {
+		  loadingPage.style.display = 'none';
+		}, 3000);
+	  });
+  </script>

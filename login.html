@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        form {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+          }
+          
+          .container {
+            padding: 16px;
+            margin: 0 auto;
+            max-width: 500px;
+          }
+          
+          h1 {
+            text-align: center;
+          }
+          
+          label {
+            font-weight: bold;
+          }
+          
+          input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+          }
+          
+          button[type=button] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+          }
+          
+          button[type=button]:hover {
+            opacity: 0.8;
+          }
+          
+          hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 20px;
+          }
+          
+          .signin {
+            text-align: center;
+          }
+          
+          .signin a {
+            color: #007bff;
+          }
+          
+          /* Loading page styles */
+          #loading-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+          }
+          
+          #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+          }
+          .name {
+            font-weight: bold;
+            font-style: italic;
+            color: #007bff; /* blue color */
+          }
+          
+    </style>
+</head>
+
+<body>
+
+<!-- Loading page markup -->
+<div id="loading-page">
+  <div id="loading-message">Loading...</div>
+</div>
+
+<form>
+    <div class="container">
+        <h1>Register</h1>
+        <hr>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+        <label><b>Password</b></label>
+        <input type="password" placeholder="Password" name="psw" id="psw" required>
+
+        <hr>
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+        <button type="button" id="submitData" name="submitData" class="registerbtn">Register</button>
+    </div>
+    <p>&copy; <span class="name">Yashwanth,Ruthvik,Saketh Raja</span> </p>
+
+
+    
+</form>
+
+</body>
+</html>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import {getDatabase, set, ref, update} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCveKCXoUiis5mkZ0RXQmM5RazuFA7CZ-A",
+      authDomain: "test-e1608.firebaseapp.com",
+      databaseURL: "https://test-e1608-default-rtdb.firebaseio.com",
+      projectId: "test-e1608",
+      storageBucket: "test-e1608.appspot.com",
+      messagingSenderId: "675649256134",
+      appId: "1:675649256134:web:1e6487a4a4658993e675c7"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const database = getDatabase(app);
+    submitData.addEventListener('click', (e) => {
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('psw').value;
+
+      //  //Register
+      //  createUserWithEmailAndPassword(auth, email, password)
+      //      .then((userCredential) => {
+      //          // Signed in
+      //          const user = userCredential.user;
+      //          // ... user.uid
+      //          set(ref(database, 'users/' + user.uid), {
+      //              email: email,
+      //              password: password
+      //          })
+      //              .then(() => {
+      //                  // Data saved successfully!
+      //                  alert('user created successfully');
+      //  
+      //              })
+      //              .catch((error) => {
+      //                  // The write failed...
+      //                  alert(error);
+      //              });
+      //      })
+      //      .catch((error) => {
+      //          const errorCode = error.code;
+      //          const errorMessage = error.message;
+      //          // ..
+      //          alert(errorMessage);
+      //      });
+//========================================================================================
+       //LOGIN
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ..
+          // save log in details into real time database
+          var lgDate = new Date();
+          update(ref(database, 'users/' + user.uid), {
+              last_login: lgDate,
+          })
+              .then(() => {
+                  // Data saved successfully
+                  //alert('user logged in successfully');
+                  if(user.uid=="5WDXHMjCnsYTzt0QPJcL10i9B2R2")
+                  {
+                   window.location.href = "MERLIN/ml_buttons.html";
+                  }
+                  if(user.uid=="FK17xkNiDxPEZude867PYNlESOK2")
+                  {
+                   window.location.href = "HEPHZI/hp_buttons.html";
+                  }
+                  if(user.uid=="M9t96sFMmjfC6jZwSyQTZ8gEoUu1")
+                  {
+                   window.location.href = "PRADEEP/pd_buttons.html";
+                  }
+                  if(user.uid=="MjVMKrO5aoWuY4KpMMAuANdepTT2")
+                  {
+                   window.location.href = "SWETHA/sw_buttons.html";
+                  }
+                  if(user.uid=="SIYy0CdsdCSTEAPJenz9UoxTdAS2")
+                  {
+                   window.location.href = "MN_ROA/mn_buttons.html";
+                  }
+                  if(user.uid=="Tihu9p2TSdZowHbA5uL5b9cfmkk2")
+                  {
+                   window.location.href = "VIJAY KUMAR/vj_buttons.html";
+                  }
+                  if(user.uid=="VjZroD0KVvNxVGThmpFtUuvV2Q02")
+                  {
+                   window.location.href = "ANUSHA/an_buttons.html";
+                  }
+                  if(user.uid=="Zy23npz2UUcZQ6s7YHXhYptvJrL2")
+                  {
+                   window.location.href = "JAGADISH/jd_buttons.html";
+                  }
+
+                  
+              })
+              .catch((error) => {
+                  // The write failed...
+                  alert(error);
+              });
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+      });
+     //============================================================================
+ //  signOut(auth).then(() => {
+ //         // Sign-out successful.
+ //  }).catch((error) => {
+ //      // An error happened.
+ //  });
+});
+
+
+</script>
+<script>
+  const loadingPage = document.getElementById('loading-page');
+  const submitButton = document.getElementById('submitData');
+  
+  submitButton.addEventListener('click', () => {
+    loadingPage.style.display = 'block';
+
+    // Simulate a delay of 3 seconds for demonstration purposes
+    setTimeout(() => {
+      loadingPage.style.display = 'none';
+    }, 3000);
+  });
+</script>

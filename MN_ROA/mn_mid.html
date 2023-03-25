@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Compare Numbers</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		  }
+		  
+		  .data {
+			margin: 50px auto;
+			width: 80%;
+			font-family: sans-serif;
+			font-size: 13px;
+			color: #555;
+			box-shadow: 0 1px 4px 0px rgba(0, 0, 50, 0.3);
+		  }
+		  
+		  table {
+			width: 100%;
+			background-color: transparent;
+			border-collapse: collapse;
+		  }
+		  
+		  th {
+			background-color: #8665f7;
+			color: #fff;
+			font-weight: 600;
+		  }
+		  
+		  th,
+		  td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid #d6d4d4;
+		  }
+		  
+		  #mid,
+		  button {
+			padding: 10px;
+			border: none;
+			background-color: #8665f7;
+			color: #fff;
+			font-weight: 600;
+			cursor: pointer;
+		  }
+		  
+		  #mid {
+			margin-right: 10px;
+		  }
+		  
+		  button:hover {
+			background-color: #734ee3;
+		  }
+		  
+		  .result {
+			font-weight: bold;
+			color: green;
+		  }
+		  
+	</style>
+</head>
+
+<body>
+
+	<div class="data">
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Enter Marks</th>
+					<th>Verify Marks</th>
+					<th>Result</th>
+
+				</tr>
+			</thead>
+			<tbody id="table-body">
+				<!-- <tr>
+					<td>1</td>
+					<td>20911A3502</td>
+					<td>ABDUL OMER FAROOQ</td>
+					<td>
+						<label for="num1">Number 1:</label>
+						<input type="number" id="num1_1" onchange="compareValues(1)">
+					</td>
+					<td>
+						<label for="num2">Number 2:</label>
+						<input type="number" id="num2_1" onchange="compareValues(1)">
+					</td>
+					<td class="result"></td>
+				</tr> -->
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">
+						<label for="mid">Choose :</label>
+						<select id="mid" name="selectMid">
+							<option value="mid1">Mid 1</option>
+							<option value="mid2">Mid 2</option>
+							<option value="mid3">Mid 3</option>
+						</select>
+					</td>
+					<td colspan="3">
+						<button type="button" id="cc">CC</button>
+					</td>
+				</tr>
+			</tfoot>
+
+
+		</table>
+	</div>
+
+
+	<script type="module">
+		import data from './students_fastrack.json' assert{type: 'json'};
+		// Import the functions you need from the SDKs you need
+
+
+		for (let one of data) {
+
+			let NewElement = document.createElement("tr");
+			NewElement.classList.add("tab");
+			var leftId = one.Id + '_1';
+			var RightId = one.Id + '_2';
+			NewElement.innerHTML = `
+				<td>${one.Id}</td>
+				<td>${one.Name}</td>
+				<td>
+					<label for="num1"></label>
+					<input type="number" id="${leftId}" placeholder="Marks_1">
+				</td>
+				<td>
+					<label for="num2"></label>
+					<input type="number" id="${RightId}" class="second" placeholder="Marks_2">
+				</td>
+				<td class="result" id="${one.Id}"></td>
+					`;
+			document.querySelector('#table-body').appendChild(NewElement);
+		}
+
+		let second = document.querySelectorAll('.second');
+		for (let one of second) {
+			one.addEventListener('change', function () {
+				var secondId = one.id;
+				var fisrtId = secondId.substring(0, 10) + '_1';
+				var result = secondId.substring(0, 10);
+				var num1 = parseFloat(document.getElementById(`${fisrtId}`).value);
+				var num2 = parseFloat(document.getElementById(`${secondId}`).value);
+				var resultCell = document.getElementById(`${result}`);
+
+				if (isNaN(num1) || isNaN(num2)) {
+					resultCell.innerText = '';
+				} else if (num1 === num2) {
+					resultCell.innerHTML = '<span class="right">&#10004;</span>';
+				} else {
+					resultCell.innerHTML = '<span class="cross">&#10008;</span>';
+				}
+			})
+		}
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+		import { getDatabase, set, ref, push, child, update } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+		// TODO: Add SDKs for Firebase products that you want to use
+		// https://firebase.google.com/docs/web/setup#available-libraries
+
+		// Your web app's Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyCveKCXoUiis5mkZ0RXQmM5RazuFA7CZ-A",
+			authDomain: "test-e1608.firebaseapp.com",
+			databaseURL: "https://test-e1608-default-rtdb.firebaseio.com",
+			projectId: "test-e1608",
+			storageBucket: "test-e1608.appspot.com",
+			messagingSenderId: "675649256134",
+			appId: "1:675649256134:web:1e6487a4a4658993e675c7"
+		};
+
+		// Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const database = getDatabase(app);
+
+		let mid = document.getElementById('mid');
+		let MidNum = mid.value;
+		mid.addEventListener('change',function(){
+			MidNum = mid.value;
+			console.log(MidNum);
+		})
+
+
+		cc.addEventListener('click', (e) => {
+			for (let one of second) {
+				var Marks_1 = document.getElementById(one.id).value;
+				var id = one.id.substring(0, 10);
+
+				update(ref(database, `cc/${MidNum}`), {
+					[id]: Marks_1,
+				})
+			}
+
+
+		});
+
+	</script>
+</body>
+
+</html>

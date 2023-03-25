@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Three Buttons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          
+          .data {
+            margin: 50px auto;
+            width: 80%;
+            font-family: sans-serif;
+            font-size: 13px;
+            color: #555;
+            box-shadow: 0 1px 4px 0px rgba(0, 0, 50, 0.3);
+          }
+          
+          table {
+            width: 100%;
+            background-color: transparent;
+            border-collapse: collapse;
+          }
+          
+          th {
+            background-color: #8665f7;
+            color: #fff;
+            font-weight: 600;
+          }
+          
+          th,
+          td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #d6d4d4;
+          }
+          
+          #mid,
+          button {
+            padding: 10px;
+            border: none;
+            background-color: #8665f7;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+          }
+          
+          #mid {
+            margin-right: 10px;
+          }
+          
+          button:hover {
+            background-color: #734ee3;
+          }
+          
+          .result {
+            font-weight: bold;
+            color: green;
+          }
+          
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+    <table id="display">
+        <tr>
+            <th>Roll Numbers</th>
+            <th>Name</th>
+            <th>Mid-1</th>
+            <th>Mid-2</th>
+            <th>Mid-3</th>
+        </tr>
+    </table>
+    <br><br>
+    <button onclick="ExportToExcel('xlsx')">Download Excel</button>
+
+</body>
+<script type="module">
+    var stdNo = 0;
+    var tbody = document.getElementById('tbody1');
+    const RollNumbers = {
+        "20911A3502": "ABDUL OMER FAROOQ",
+        "20911A3503": "ALLAMSETTI PRAVEEN MARTIN",
+        "20911A3504": "ALUGANI HARSHITHA",
+        "20911A3505": "ALURU SAI HARSHITHA",
+        "20911A3506": "ANDE SRIKANTH",
+        "20911A3508": "BACHU THARUN KUMAR",
+        "20911A3509": "BALA SUMAGNA DONDETI",
+        "20911A3511": "BANOTH SINDHU",
+        "20911A3513": "BASAVARAJU SREYA",
+        "20911A3515": "BOMMINENI SAVINAY REDDY",
+        "20911A3518": "CHEPYALA SAI TEJAS",
+        "20911A3521": "DONTHULA VAISHNAVI",
+        "20911A3524": "G SHASHIVARDHAN",
+        "20911A3525": "GADE SRIMANTH",
+        "20911A3527": "GUNDUKADI DEEKSHITHA",
+        "20911A3528": "JADA KASHI NATH",
+        "20911A3531": "KOKKONDA PRANAY",
+        "20911A3532": "KOKKULA YASHMI",
+        "20911A3533": "KORBA NESHA",
+        "20911A3540": "MANCHE SAMIKSHA YADAV",
+        "20911A3544": "MYAKALA SUDHAKAR CHANDRA LEKHA",
+        "20911A3546": "P VAMSHI KUMAR GOUD",
+        "20911A3547": "PALLE DINESH REDDY",
+        "20911A3548": "PASHAM ARUN",
+        "20911A3550": "PREKSHA GUPTA",
+        "20911A3552": "S ADITYA DHANRAJ",
+        "20911A3553": "SANDEPALLY VARSHINI",
+        "20911A3554": "SATTARSHETTY TEJASWI",
+        "20911A3555": "SATTU CHAITHRIKA PATEL",
+        "20911A3556": "SHAIK ASAD",
+        "20911A3558": "SWATHI THAKUR",
+        "20911A3559": "YELAMADDI KEERTHI CHOWDARY",
+        "20911A3560": "ZAIB UNNISA NAYEEM",
+        "20911A3561": "AILAPURAM BHARGAV",
+        "20911A3564": "AVANCHA SANJANA",
+        "20911A3568": "BAVIRISETTY PAVAN KUMAR",
+        "20911A3569": "BEESI REDDY CHANDANA",
+        "20911A3572": "RALLABANDI SRIKARI",
+        "20911A3573": "DAPPU KETHANA",
+        "20911A3574": "DARNA RISHI",
+        "20911A3576": "ENGALA GURUPRAKASH",
+        "20911A3577": "G AISHWARYA",
+        "20911A3580": "GAJJELA SHIVA CHAITANYA",
+        "20911A3581": "GANGISHETTYWAR MAHESH",
+        "20911A3582": "GANNU SRAVAN REDDY",
+        "20911A3584": "GUTTULA SAI PHANIDHAR",
+        "20911A3587": "HAFSAH",
+        "20911A3589": "K AKSHITA",
+        "20911A3591": "KARTHIKEYA BARLA",
+        "20911A3592": "KASHETTY LOHITH KUMAR",
+        "20911A3593": "KATROJU SAI HARSHINI",
+        "20911A3594": "KATTA RUTHVIK",
+        "20911A3595": "KOLUPULA DIVYA",
+        "20911A3596": "KOPPULA SAKETHRAJA",
+        "20911A3597": "KOTHAGADI NIKITHA",
+        "20911A35A3": "P SNIGDHA",
+        "20911A35A4": "PALUSA KALPANA",
+        "20911A35A5": "PANUGANTI RITHIKA",
+        "20911A35A6": "PATLOLLA NEHA REDDY",
+        "20911A35A8": "PULIMI YASHWANTH KUMAR REDDY",
+        "20911A35B1": "RATHLAVATH RATAN KUMAR NAIK",
+        "20911A35B2": "SAHIL TAMANG",
+        "20911A35B3": "VELUDANDI SATHVIKA",
+        "20911A35B6": "SURYANENI ROHITH",
+        "20911A35B7": "THURPU PRANEETH REDDY",
+        "20911A35B8": "V K MADHAN",
+        "20911A35B9": "VADLAKONDA SAI RAM",
+        "21915A3503": "BANOTH ANJALI",
+        "21915A3505": "ERUKALA SOUJANYA",
+        "21915A3506": "KARRAVULA CHITHRA",
+        "21915A3508": "LAKAVATH MURALI",
+        "21915A3509": "MANDHABALA RAHUL",
+        "21915A3510": "MOHAMMED OWAIS HUSSAIN",
+        "21915A3512": "TELAPROLU ANIL",
+    }
+    function AddItemToTable(data) {
+        var i = 0;
+        const table = document.getElementById('display');
+        let keys = Object.keys(RollNumbers);
+        for (let one of keys) {
+            let row = document.createElement('tr');
+            row.innerHTML = `<td>${one}</td>
+                            <td>${RollNumbers[one]}</td>`
+            for (const key of Object.keys(data)) {
+                row.innerHTML += `
+                <td>${data[key][one]}</td>
+                `
+            }
+            table.appendChild(row);
+        }
+    }
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, set, ref, push, child, update, onValue, get } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCveKCXoUiis5mkZ0RXQmM5RazuFA7CZ-A",
+        authDomain: "test-e1608.firebaseapp.com",
+        databaseURL: "https://test-e1608-default-rtdb.firebaseio.com",
+        projectId: "test-e1608",
+        storageBucket: "test-e1608.appspot.com",
+        messagingSenderId: "675649256134",
+        appId: "1:675649256134:web:1e6487a4a4658993e675c7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    function GetAllDataOnce() {
+        var students = [];
+        const dbRef = ref(database);
+        //get(child(dbRef,"pdbs/mid1/"))
+        //.then((snapshot)=>
+        //{
+        //    snapshot.forEach(childSnapshot =>
+        //    {
+        //        students.push(childSnapshot.val());
+        //    });
+        //    //AddAllItemsToTable(students);
+        //});
+        const marksref = ref(database, 'iai/');
+        onValue(marksref, (snapshot) => {
+            const data = snapshot.val();
+            AddItemToTable(data);
+        });
+    }
+    window.onload = GetAllDataOnce;
+
+</script>
+<script>
+  function ExportToExcel(type, fn, dl) {
+    var elt = document.getElementById('display');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+      XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+      XLSX.writeFile(wb, fn || ('CN_MID.' + (type || 'xlsx')));
+ }
+</script>
+
+</html>
